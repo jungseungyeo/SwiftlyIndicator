@@ -11,25 +11,41 @@ pod 'SwiftlyIndicator'
 
 ## Example
 ```Swift
-// Image Indicator
-view.startImageSwitflyIndicator(images: [UIImage], milliseconds: Int)
+import SwiftlyIndicator
+
+override func viewDidLoad() {
+  // Image Indicator
+  view.startImageSwitflyIndicator(images: [UIImage], milliseconds: Int)
+}
 ```
 ![](./Images/imageIndicator.gif)
 
 ```Swift
-// Image Rotation Indicator
-view.rotationImageSiwftlyIndicator(images: [UIImage], bgColor: UIColor)
+import SwiftlyIndicator
+
+override func viewDidLoad() {
+  // Image Rotation Indicator
+  view.rotationImageSiwftlyIndicator(images: [UIImage], bgColor: UIColor)
+}
 ```
 ![](./Images/imageRotation.gif)
 
 ```Swift
-// default
-view.startSwiftlyIndicator()
+import SwiftlyIndicator
+
+override func viewDidLoad() {
+  // default
+  view.startSwiftlyIndicator()
+}
 ```
 ![](./Images/defaultIndicator.gif)
 
 ```Swift
-// Rotation
-view.rotationSwiftlyIndicator()
+import SwiftlyIndicator
+
+override func viewDidLoad() {
+  // Rotation
+  view.rotationSwiftlyIndicator()
+}
 ```
 ![](./Images/defaultRotation.gif)
