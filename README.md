@@ -14,22 +14,22 @@ pod 'SwiftlyIndicator'
 // Image Indicator
 view.startImageSwitflyIndicator(images: [UIImage], milliseconds: Int)
 ```
-
-![](./images/imageIndicator.gif)
+![](./Images/imageIndicator.gif)
 
 ```Swift
+// Image Rotation Indicator
 view.rotationImageSiwftlyIndicator(images: [UIImage], bgColor: UIColor)
 ```
-![](./images/imageRotation.gif)
+![](./Images/imageRotation.gif)
 
 ```Swift
 // default
 view.startSwiftlyIndicator()
 ```
-![](./images/defaultIndicator.gif)
+![](./Images/defaultIndicator.gif)
 
 ```Swift
 // Rotation
 view.rotationSwiftlyIndicator()
 ```
-![](./images/defaultRotation.gif)
+![](./Images/defaultRotation.gif)
