@@ -9,6 +9,8 @@ Pod::Spec.new do |s|
   s.author       = { "linsaeng" => "duwjdtmd91@gmail.com" }
   s.platform     = :ios, "11.0"
   s.source       = { :git => "https://github.com/jungseungyeo/SwiftlyIndicator.git", :tag => "1.0.0" }
-  s.source_files = "SwiftlyIndicator/**/*"
+  s.source_files = "SwiftlyIndicator/**/*.swift"
+  s.swift_version = "4.2"
+
 
 end
