@@ -10,6 +10,6 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = "11.0"
   s.swift_version = "4.2"
   s.source       = { :git => "https://github.com/jungseungyeo/SwiftlyIndicator.git", :tag => s.version }
-  s.source_files = "SwiftlyIndicator/**/*"
+  s.source_files = "SwiftlyIndicator/**/*.swift"
 
 end
