@@ -1,12 +1,17 @@
 # SwiftlyIndicator
-![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg)  [![CocoaPods](http://img.shields.io/cocoapods/v/Then.svg)](https://cocoapods.org/pods/SwiftlyIndicator) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+![Swift](https://img.shields.io/badge/Swift-5.0-orange.svg)  [![CocoaPods](http://img.shields.io/cocoapods/v/SwiftlyIndicator.svg)](https://cocoapods.org/pods/SwiftlyIndicator)
 
 ---
 
 ## Installation
 
 ```ruby
+
+pod init
 pod 'SwiftlyIndicator'
+pod install
+
+open [project].xcworkspace
 ```
 
 ## Example
