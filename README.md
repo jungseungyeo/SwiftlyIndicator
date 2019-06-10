@@ -26,7 +26,7 @@ override func viewDidLoad() {
 ```
 <br />
 
-![](./Images/imageIndicator.gif)
+<img src="/Images/imageIndicator.gif" alt="screenshot" width="auto" height="500" />
 
 ```Swift
 import SwiftlyIndicator
@@ -38,7 +38,7 @@ override func viewDidLoad() {
 ```
 <br />
 
-![](./Images/imageRotation.gif)
+<img src="/Images/imageRotation.gif" alt="screenshot" width="auto" height="500" />
 
 ```Swift
 import SwiftlyIndicator
@@ -50,7 +50,7 @@ override func viewDidLoad() {
 ```
 <br />
 
-![](./Images/defaultIndicator.gif)
+<img src="/Images/defaultIndicator.gif" alt="screenshot" width="auto" height="500" />
 
 ```Swift
 import SwiftlyIndicator
@@ -62,7 +62,7 @@ override func viewDidLoad() {
 ```
 <br />
 
-![](./Images/defaultRotation.gif)
+<img src="/Images/defaultRotation.gif" alt="screenshot" width="auto" height="500" />
 
 ## Author
 
