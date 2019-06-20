@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 
 extension UIView {
-    public func startSwiftlyIndicator() {
+    public func startWaiting() {
         DispatchQueue.main.async {
             switch SwiftlyIndicator.shared.type {
             case .basic, .circleBasic:
@@ -25,11 +25,11 @@ extension UIView {
         }
     }
 
-    public func setupSwiftly(swiftlyType: SwiftlyIndicatorType) {
-        SwiftlyIndicator.shared.setup(swiftlyType)
+    public func setupSwiftlyIndicator(type: SwiftlyIndicatorType) {
+        SwiftlyIndicator.shared.setup(type)
     }
 
-    public func stopSwiftlyIndicator() {
+    public func stopWaiting() {
         DispatchQueue.main.async {
             SwiftlyIndicator.shared.stop()
         }
