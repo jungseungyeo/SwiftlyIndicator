@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SwiftlyIndicator"
-  s.version      = "1.0.4"
+  s.version      = "1.0.5"
   s.summary      = "SwiftylIndcator"
   s.description  = "This is such a SwiftylIndcator framework"
   s.homepage     = "https://github.com/jungseungyeo/SwiftlyIndicator"
