@@ -1,6 +1,6 @@
 # SwiftlyIndicator
 
-![Swift](https://img.shields.io/badge/Swift-5.0-orange.svg) ![CocoaPods](http://img.shields.io/cocoapods/v/SwiftlyIndicator.svg) ![License](https://img.shields.io/badge/Licence-MIT-green.svg) 
+![Swift](https://img.shields.io/badge/Swift-5.0-orange.svg) ![CocoaPods](http://img.shields.io/cocoapods/v/SwiftlyIndicator.svg) ![License](https://img.shields.io/badge/Licence-MIT-green.svg)
 
 ------
 
