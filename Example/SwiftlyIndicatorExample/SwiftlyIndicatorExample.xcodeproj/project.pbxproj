@@ -12,7 +12,6 @@
 		2F9E6A7422ACFAC500AE1C8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F9E6A7222ACFAC500AE1C8A /* Main.storyboard */; };
 		2F9E6A7622ACFAC600AE1C8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F9E6A7522ACFAC600AE1C8A /* Assets.xcassets */; };
 		2F9E6A7922ACFAC600AE1C8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F9E6A7722ACFAC600AE1C8A /* LaunchScreen.storyboard */; };
-		2F9E6A8122ACFCF400AE1C8A /* SwiftlyIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9E6A8022ACFCF400AE1C8A /* SwiftlyIndicatorViewController.swift */; };
 		B9736548C99B2593AF22B349 /* Pods_SwiftlyIndicatorExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB88E29DBCD6AF4A86BD2492 /* Pods_SwiftlyIndicatorExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,7 +24,6 @@
 		2F9E6A7522ACFAC600AE1C8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F9E6A7822ACFAC600AE1C8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2F9E6A7A22ACFAC600AE1C8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2F9E6A8022ACFCF400AE1C8A /* SwiftlyIndicatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftlyIndicatorViewController.swift; sourceTree = "<group>"; };
 		D23D06609A0C0B56910B0E94 /* Pods-SwiftlyIndicatorExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftlyIndicatorExample.release.xcconfig"; path = "Target Support Files/Pods-SwiftlyIndicatorExample/Pods-SwiftlyIndicatorExample.release.xcconfig"; sourceTree = "<group>"; };
 		DB88E29DBCD6AF4A86BD2492 /* Pods_SwiftlyIndicatorExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftlyIndicatorExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -73,7 +71,6 @@
 			children = (
 				2F9E6A6E22ACFAC500AE1C8A /* AppDelegate.swift */,
 				2F9E6A7022ACFAC500AE1C8A /* ViewController.swift */,
-				2F9E6A8022ACFCF400AE1C8A /* SwiftlyIndicatorViewController.swift */,
 				2F9E6A7222ACFAC500AE1C8A /* Main.storyboard */,
 				2F9E6A7522ACFAC600AE1C8A /* Assets.xcassets */,
 				2F9E6A7722ACFAC600AE1C8A /* LaunchScreen.storyboard */,
@@ -206,7 +203,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F9E6A8122ACFCF400AE1C8A /* SwiftlyIndicatorViewController.swift in Sources */,
 				2F9E6A7122ACFAC500AE1C8A /* ViewController.swift in Sources */,
 				2F9E6A6F22ACFAC500AE1C8A /* AppDelegate.swift in Sources */,
 			);

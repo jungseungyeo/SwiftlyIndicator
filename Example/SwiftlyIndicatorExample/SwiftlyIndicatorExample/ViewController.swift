@@ -9,70 +9,71 @@
 import UIKit
 import SwiftlyIndicator
 
-enum IndicatorType: Int, CustomStringConvertible {
-    case defaultIndicator
-    case defaultRotation
-    case imageIndicator
-    case imageRotation
-
-    var description: String {
-        switch self {
-        case .defaultIndicator:
-            return "defualt"
-        case .defaultRotation:
-            return "defaultRotation"
-        case .imageIndicator:
-            return "imageIndicator"
-        case .imageRotation:
-            return "imageRotation"
-        }
-    }
-
-}
-
 class ViewController: UIViewController {
 
-    let items: [IndicatorType] = [.defaultIndicator, .defaultRotation, .imageIndicator, .imageRotation]
+    private var isPlay: Bool = false
 
-    lazy var tableView: UITableView = {
-        let tableview = UITableView(frame: self.view.bounds)
-        tableview.delegate = self
-        tableview.dataSource = self
-        tableview.backgroundColor = .white
-        tableview.register(UITableViewCell.self, forCellReuseIdentifier: "CellId")
-        return tableview
-    }()
+    private let swiftlyType: [SwiftlyIndicatorType] = [.basic,
+                                                       .rotationBasic,
+                                                       .circleBasic,
+                                                       .image(images: [#imageLiteral(resourceName: "snowColor"), #imageLiteral(resourceName: "sunColor"), #imageLiteral(resourceName: "dropColor")],
+                                                              chagedMilliseconds: 200),
+                                                       .rotationImage(images: [#imageLiteral(resourceName: "drop"), #imageLiteral(resourceName: "rain.png"), #imageLiteral(resourceName: "sun.png")])]
+
+    private let pickerTitle: [String] = ["basic",
+                                         "rotationBasic",
+                                         "circleBasic",
+                                         "image",
+                                         "rotationImage"]
+
+    @IBOutlet weak var pickerView: UIPickerView!
+
+    @IBAction func startBtn(_ sender: Any) {
+        view.startWaiting()
+        changedStatus()
+    }
+
+    @IBAction func stopBtn(_ sender: Any) {
+        view.stopWaiting()
+        changedStatus()
+    }
+
+    private func changedStatus() {
+        isPlay = !isPlay
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(tableView)
+        pickerView.delegate = self
+        pickerView.dataSource = self
+
+        // defualt type basic
+        view.startWaiting()
     }
 }
 
-extension ViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let selectedType = IndicatorType(rawValue: indexPath.row) else {
-            return
+extension ViewController: UIPickerViewDelegate {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        view.setupSwiftlyIndicator(type: swiftlyType[row] )
+
+        if isPlay {
+            view.stopWaiting()
+            view.startWaiting()
         }
-
-        if let vc = SwiftlyIndicatorViewController.instance() {
-            vc.type = selectedType
-            navigationController?.pushViewController(vc, animated: true)
-        }
     }
 }
 
-extension ViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+extension ViewController: UIPickerViewDataSource {
+
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CellId", for: indexPath)
-        cell.textLabel?.text = "\(items[indexPath.row])"
-        return cell
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return swiftlyType.count
     }
 
-
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerTitle[row]
+    }
 }
-

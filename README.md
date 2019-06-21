@@ -7,11 +7,7 @@
 ## Installation
 
 ```ruby
-pod init
 pod 'SwiftlyIndicator'
-pod install
-
-open [project].xcworkspace
 ```
 
 ## Example
@@ -20,46 +16,65 @@ open [project].xcworkspace
 import SwiftlyIndicator
 
 override func viewDidLoad() {
-  // Image Indicator
-  view.startImageSwitflyIndicator(images: [UIImage], milliseconds: Int)
+
+  // Setting SwiftlyIndicator type -- default type basic
+  view.setupSwiftlyIndicator(type: SwiftlyIndicatorType)
+
+  // Start SwiftlyIndicator
+  view.startWaiting()
+
+  // Stop SwiftlyIndicator
+  view.stopWaiting()
+
+}
+```
+
+```Swift
+
+// SwiftlyIndicator type
+public enum SwiftlyIndicatorType: Equatable {
+    case basic
+    case rotationBasic
+    case circleBasic
+    case image(images: [UIImage], chagedMilliseconds: Int)
+    case rotationImage(images: [UIImage])
 }
 ```
 <br />
 
+```
+type image
+```
+
+<br />
+
 <img src="/Images/imageIndicator.gif" alt="screenshot" width="auto" height="500" />
 
-```Swift
-import SwiftlyIndicator
+<br />
 
-override func viewDidLoad() {
-  // Image Rotation Indicator
-  view.rotationImageSiwftlyIndicator(images: [UIImage], bgColor: UIColor)
-}
+```
+type rotationImage
 ```
 <br />
 
 <img src="/Images/imageRotation.gif" alt="screenshot" width="auto" height="500" />
 
-```Swift
-import SwiftlyIndicator
+<br />
 
-override func viewDidLoad() {
-  // default
-  view.startSwiftlyIndicator()
-}
 ```
+type basic
+```
+
 <br />
 
 <img src="/Images/defaultIndicator.gif" alt="screenshot" width="auto" height="500" />
 
-```Swift
-import SwiftlyIndicator
+<br />
 
-override func viewDidLoad() {
-  // Rotation
-  view.rotationSwiftlyIndicator()
-}
 ```
+type rotationBasic
+```
+
 <br />
 
 <img src="/Images/defaultRotation.gif" alt="screenshot" width="auto" height="500" />
@@ -70,4 +85,4 @@ override func viewDidLoad() {
 
 ## License
 
-SwiftlyIndicator is licensed under the MIT license. Check the [LICENSE](LICENSE) file for details.
+SwiftlyIndicator is licensed under the MIT license. Check the [LICENSE](/SwiftlyIndicator/LICENSE) file for details.

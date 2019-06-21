@@ -1,5 +1,5 @@
 PODS:
-  - SwiftlyIndicator (1.0.3)
+  - SwiftlyIndicator (1.0.6)
 
 DEPENDENCIES:
   - SwiftlyIndicator
@@ -9,7 +9,7 @@ SPEC REPOS:
     - SwiftlyIndicator
 
 SPEC CHECKSUMS:
-  SwiftlyIndicator: d713192cbd2656fc246cbfb387d9cf69e3827678
+  SwiftlyIndicator: a867759b845cdc7702d5f07268e23aa44046679c
 
 PODFILE CHECKSUM: 9334a6767c0b3a99a26c14fa4ff5fc15c3193202
 
