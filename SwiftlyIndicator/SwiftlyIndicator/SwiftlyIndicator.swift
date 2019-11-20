@@ -2,225 +2,232 @@
 //  SwiftlyIndicator.swift
 //  SwiftlyIndicator
 //
-//  Created by Jung seoung Yeo on 09/06/2019.
-//  Copyright © 2019 Jung seoung Yeo. All rights reserved.
+//  Created by 여정승 on 2019/11/20.
+//  Copyright © 2019 linsaeng. All rights reserved.
 //
 
 import UIKit
 import Foundation
 
-extension UIView {
-    public func startWaiting() {
-        DispatchQueue.main.async {
-            switch SwiftlyIndicator.shared.type {
-            case .basic, .circleBasic:
-                SwiftlyIndicator.shared.wait(self)
-            case .rotationBasic:
-                SwiftlyIndicator.shared.rotationWait(self)
-            case .image:
-                SwiftlyIndicator.shared.imageWait(self)
-            case .rotationImage:
-                SwiftlyIndicator.shared.rotationImageWait(self)
-            }
-        }
-    }
-
-    public func setupSwiftlyIndicator(type: SwiftlyIndicatorType) {
-        SwiftlyIndicator.shared.setup(type)
-    }
-
-    public func stopWaiting() {
-        DispatchQueue.main.async {
-            SwiftlyIndicator.shared.stop()
-        }
-    }
-
+public enum SwiftlyIndicatorType {
+    case `default`
+    case normal
+    case circle
+    case image(images: [UIImage], second: TimeInterval)
+    case rotation(images: [UIImage])
 }
 
-public enum SwiftlyIndicatorType: Equatable {
-    case basic
-    case rotationBasic
-    case circleBasic
-    case image(images: [UIImage], chagedMilliseconds: Int)
-    case rotationImage(images: [UIImage])
-}
+public class SwiftlyIndicator: NSObject {
 
-private class SwiftlyIndicator: NSObject {
+    public private(set) var currentType: SwiftlyIndicatorType = .default
 
-    fileprivate static let shared = SwiftlyIndicator()
+    public private(set) lazy var indicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.hidesWhenStopped = true
+        indicator.stopAnimating()
+        indicator.color = .label
+        return indicator
+    }()
 
-    private var indicatorWindow: UIWindow?
-    private(set) var type: SwiftlyIndicatorType = .basic
-    private var images: [UIImage]? = nil
-    private var chagedMillisecondTime: Int = 200
-    private var timerTimes = 0
-    private var timer: DispatchSource!
+    public private(set) lazy var indicatorBackground: UIView = {
+        let view = UIView(frame: .zero)
+        view.backgroundColor = .systemGray
+        view.frame.size = const.indicatorBackgroundSize
+        view.layer.cornerRadius = const.indicatorBackgroundRadius
+        view.isHidden = false
+        return view
+    }()
 
-    private override init() {
-        super.init()
-    }
+    public private(set) lazy var imageIndicatorView: UIImageView = {
+        let iv = UIImageView(frame: .zero)
+        iv.contentMode = .scaleAspectFit
+        iv.frame.size = const.indicatorBackgroundSize
+        return iv
+    }()
+
+    private lazy var indicatorImages: [UIImage] = []
+    private lazy var changedSecond: TimeInterval = TimeInterval(const.rotationSecond)
+    private var timer: Timer?
+    private lazy var changedCount: Int = 0
+    private lazy var isStop: Bool = true
+    private lazy var rotaionSecond: TimeInterval = TimeInterval(const.rotationSecond)
+
+    private var activityView: UIView!
 
     private struct Const {
-        let defaultFrame: CGRect = .init(x: 0, y: 0, width: 80, height: 80)
-
-        let activityIndicatorFrame: CGRect = .init(x: (80 / 4),
-                                                   y: (80 / 4),
-                                                   width: (80 / 2),
-                                                   height: (80 / 2))
-        let activityIndicatorColor: UIColor = .init(red: 0, green: 0, blue: 0, alpha: 0.8)
+        let indicatorBackgroundSize: CGSize = .init(width: 100, height: 100)
+        let indicatorBackgroundRadius: CGFloat = 10
+        let rotationBackgroundSize: CGSize = .init(width: 100, height: 100)
+        let rotationImageSize: CGSize = .init(width: 40, height: 40)
+        let rotationSecond: CGFloat = 0.5
     }
 
     private let const = Const()
 
-    fileprivate func setup(_ type: SwiftlyIndicatorType) {
-        self.type = type
-        switch type {
-        case .basic, .rotationBasic, .circleBasic:
-            images = nil
-            chagedMillisecondTime = 200
-        case .image(let images, let chagedMilliseconds):
-            self.images = images
-            self.chagedMillisecondTime = chagedMilliseconds
-        case .rotationImage(let images):
-            self.images = images
-            self.chagedMillisecondTime = 200
+    public convenience init(_ view: UIView) {
+        self.init()
+        self.activityView = view
+        self.setupDefault()
+    }
+    private override init() { super.init() }
+}
+
+// start Indicator
+public extension SwiftlyIndicator {
+
+    func start() {
+        switch self.currentType {
+        case .default, .circle:
+            indicatorBackground.isHidden = false
+            indicator.startAnimating()
+        case .normal:
+            indicator.startAnimating()
+        case .image:
+            guard timer == nil else { return }
+            imageIndicatorView.isHidden = false
+            indicatorBackground.isHidden = true
+            timer?.invalidate()
+            imageChanged()
+            timer = Timer.scheduledTimer(timeInterval: changedSecond, target: self, selector: #selector(imageChanged), userInfo: nil, repeats: true)
+        case .rotation:
+            guard isStop else { return }
+            isStop = false
+            imageIndicatorView.isHidden = false
+            indicatorBackground.isHidden = false
+            rotaionBackgorund()
         }
     }
 
-    fileprivate func stop() {
-        if let _ = timer {
-            timer.cancel()
-            timerTimes = 0
-            timer = nil
-        }
-        indicatorWindow = nil
-    }
-}
-
-// MARK: - Default Wait
-extension SwiftlyIndicator {
-    fileprivate func wait(_ rootView: UIView) {
-        let radius: CGFloat = type == .circleBasic ? 40 : 12
-        let activityView = activityIndicatorView(radius: radius)
-        activityView.alpha = 0.0
-        let window = acitivityIndicatorWindow(rootView)
-        window.addSubview(activityView)
-        indicatorWindow = window
-
-        UIView.animate(withDuration: 0.2, animations: {
-            activityView.alpha = 1
-        })
-    }
-
-    private func activityIndicatorView(radius: CGFloat = 12) -> UIView {
-        let view = UIView(frame: const.defaultFrame)
-        view.layer.cornerRadius = radius
-        view.backgroundColor = const.activityIndicatorColor
-        let activityindicator = UIActivityIndicatorView(style: .whiteLarge)
-        activityindicator.frame = const.activityIndicatorFrame
-        activityindicator.startAnimating()
-        view.addSubview(activityindicator)
-        return view
-    }
-
-    private func acitivityIndicatorWindow(_ rootView: UIView) -> UIWindow {
-        let window = UIWindow(frame: const.defaultFrame)
-        window.backgroundColor = UIColor.clear
-        window.center = rootView.center
-        window.windowLevel = .alert
-        window.isHidden = false
-        return window
-    }
-
-}
-
-// MARK: - Image Wait
-extension SwiftlyIndicator {
-    fileprivate func imageWait(_ rootView: UIView) {
-        guard let images = images, images.count > 0 else {
-            self.wait(rootView)
+    @objc
+    private func imageChanged() {
+        guard let image = indicatorImages[safe: changedCount % indicatorImages.count] else {
+            imageIndicatorStop()
             return
         }
 
-        let ivFrame: CGRect = const.defaultFrame
-
-        let iv = UIImageView(frame: ivFrame)
-        iv.image = images.first
-        iv.contentMode = .scaleAspectFit
-
-        let view = UIView(frame: ivFrame)
-        view.addSubview(iv)
-
-        timer = DispatchSource.makeTimerSource(flags: DispatchSource.TimerFlags(rawValue: UInt(0)),
-                                               queue: .main) as? DispatchSource
-
-        timer.schedule(deadline: .now(),
-                       repeating: .milliseconds(chagedMillisecondTime))
-
-        timer.setEventHandler(handler: { [weak self] in
-            guard let self = self else { return }
-            let name = images[self.timerTimes % images.count]
-            iv.image = name
-            self.timerTimes += 1
-        })
-        timer.resume()
-
-        let window = acitivityIndicatorWindow(rootView)
-        window.addSubview(view)
-        indicatorWindow = window
+        imageIndicatorView.image = image
+        changedCount += 1
     }
-}
 
-// MARK: - Rotation
-extension SwiftlyIndicator {
-    fileprivate func rotationWait(_ rootView: UIView) {
-        let activityView = activityIndicatorView()
-        activityView.alpha = 1.0
-        let window = acitivityIndicatorWindow(rootView)
-        window.addSubview(activityView)
-        indicatorWindow = window
-        UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseInOut, animations: { [weak self] in
+    @objc
+    private func rotaionBackgorund() {
+        guard !isStop else {
+            rotaionStop()
+            return
+        }
+        imageChanged()
+
+        UIView.animate(withDuration: rotaionSecond, animations: { [weak self] in
             guard let self = self else { return }
-            self.indicatorWindow?.transform = CGAffineTransform(rotationAngle: .pi / 2)
+            self.indicatorBackground.transform = CGAffineTransform(rotationAngle: (.pi / 2))
             }, completion: { [weak self] finish in
                 guard let self = self else { return }
-                if finish {
-                    self.rotationWait(rootView)
-                }
+                self.indicatorBackground.transform = .identity
+                self.rotaionBackgorund()
         })
     }
 }
 
-// MARK: - Rotation image
-extension SwiftlyIndicator {
-    fileprivate func rotationImageWait(_ rootView: UIView) {
-        guard let images = images, images.count > 0 else {
-            self.wait(rootView)
-            return
+// stop Indicator
+public extension SwiftlyIndicator {
+    func stop() {
+        switch self.currentType {
+        case .default, .normal, .circle:
+            indicatorBackground.isHidden = true
+            indicator.stopAnimating()
+        case .image:
+            imageIndicatorStop()
+        case .rotation:
+            rotaionStop()
         }
-        let iv = UIImageView(frame: const.activityIndicatorFrame)
-        iv.image = images.first
-        iv.contentMode = .scaleAspectFit
-        iv.image = images[timerTimes % images.count]
+    }
 
-        let view = UIView(frame: const.defaultFrame)
-        view.layer.cornerRadius = 12
-        view.backgroundColor = .gray
+    private func imageIndicatorStop() {
+        timer?.invalidate()
+        timer = nil
+        imageIndicatorView.isHidden = true
+        changedCount = 0
+    }
 
-        let window = acitivityIndicatorWindow(rootView)
-        window.addSubview(view)
-        window.addSubview(iv)
-        indicatorWindow = window
-
-        UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseInOut, animations: {
-            view.transform = CGAffineTransform(rotationAngle: .pi / 2)
-        }, completion: { [weak self] finish in
-            guard let self = self else { return }
-            if finish {
-                self.timerTimes += 1
-                self.rotationImageWait(rootView)
-            }
-        })
+    private func rotaionStop() {
+        isStop = true
+        indicatorBackground.isHidden = true
+        imageIndicatorView.isHidden = true
     }
 }
 
+// update Indicator
+public extension SwiftlyIndicator {
+
+    func updateType(type: SwiftlyIndicatorType) {
+        self.currentType = type
+
+        switch self.currentType {
+        case .default:
+            indicatorBackground.layer.cornerRadius = const.indicatorBackgroundRadius
+        case .normal:
+            indicatorBackground.isHidden = true
+            indicator.style = .medium
+        case .circle:
+            indicatorBackground.layer.cornerRadius = const.indicatorBackgroundSize.height / 2
+        case .image(let images, let second):
+            setupImageIndicator(images: images, second: second)
+        case .rotation(let images):
+            setupRotationImage(images: images)
+        }
+    }
+
+    func updateImageSize(size: CGSize) {
+        imageIndicatorView.frame.size = size
+        imageIndicatorView.center = activityView.center
+    }
+
+    func updateBackgroundSzie(size: CGSize) {
+        indicatorBackground.frame.size = size
+        indicatorBackground.center = activityView.center
+    }
+
+    func updateRadius(radius: CGFloat) {
+        indicatorBackground.layer.cornerRadius = radius
+    }
+
+    func updateRotaionSecond(second: TimeInterval) {
+        rotaionSecond = second
+    }
+}
+
+// setup Indicator
+private extension SwiftlyIndicator {
+
+    func setupDefault() {
+        activityView.addSubview(indicatorBackground)
+        activityView.addSubview(indicator)
+        activityView.addSubview(imageIndicatorView)
+
+        indicatorBackground.center = activityView.center
+        indicator.center = activityView.center
+        imageIndicatorView.center = activityView.center
+    }
+
+    func setupImageIndicator(images: [UIImage], second: TimeInterval) {
+        indicatorImages = images
+        changedSecond = second
+    }
+
+    func setupRotationImage(images: [UIImage]) {
+        indicatorImages = images
+
+        imageIndicatorView.frame.size = const.rotationImageSize
+        indicatorBackground.frame.size = const.rotationBackgroundSize
+
+        imageIndicatorView.center = activityView.center
+        indicatorBackground.center = activityView.center
+    }
+
+}
+
+private extension Array {
+    subscript(safe index: Int) -> Element? {
+        return indices ~= index ? self[index] : nil
+    }
+}
