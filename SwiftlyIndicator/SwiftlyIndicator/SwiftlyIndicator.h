@@ -2,11 +2,11 @@
 //  SwiftlyIndicator.h
 //  SwiftlyIndicator
 //
-//  Created by Jung seoung Yeo on 09/06/2019.
-//  Copyright © 2019 Jung seoung Yeo. All rights reserved.
+//  Created by 여정승 on 2019/11/20.
+//  Copyright © 2019 linsaeng. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for SwiftlyIndicator.
 FOUNDATION_EXPORT double SwiftlyIndicatorVersionNumber;
