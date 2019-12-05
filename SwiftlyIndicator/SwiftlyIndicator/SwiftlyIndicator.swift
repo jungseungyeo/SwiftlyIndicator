@@ -34,7 +34,7 @@ public class SwiftlyIndicator: NSObject {
         view.backgroundColor = .systemGray
         view.frame.size = const.indicatorBackgroundSize
         view.layer.cornerRadius = const.indicatorBackgroundRadius
-        view.isHidden = false
+        view.isHidden = true
         return view
     }()
 
