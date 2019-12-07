@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ActivityViewController" customModule="SwiftlyIndicatorExampleApp" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="iN0-l3-epB" id="mF1-GT-sd1"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="ActivityViewController" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="koK-8c-pNw">
+                    <rect key="frame" x="80" y="752" width="60" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="FEB-63-Bqg"/>
+                        <constraint firstAttribute="height" constant="60" id="nHH-vf-XLV"/>
+                    </constraints>
+                    <state key="normal" title="start"/>
+                    <connections>
+                        <action selector="start:" destination="-1" eventType="touchUpInside" id="KZC-YM-0cn"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T3V-0Q-ANN">
+                    <rect key="frame" x="274" y="752" width="60" height="60"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="RL7-dJ-hej"/>
+                        <constraint firstAttribute="width" constant="60" id="pum-cu-vkG"/>
+                    </constraints>
+                    <state key="normal" title="stop"/>
+                    <connections>
+                        <action selector="stop:" destination="-1" eventType="touchUpInside" id="e5s-7b-Bqo"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="T3V-0Q-ANN" secondAttribute="trailing" constant="80" id="67P-fB-SIg"/>
+                <constraint firstItem="koK-8c-pNw" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="80" id="KHm-rR-RSX"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="koK-8c-pNw" secondAttribute="bottom" constant="50" id="TKZ-ST-dd3"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="T3V-0Q-ANN" secondAttribute="bottom" constant="50" id="ZSA-06-nau"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="137.68115942028987" y="152.67857142857142"/>
+        </view>
+    </objects>
+</document>

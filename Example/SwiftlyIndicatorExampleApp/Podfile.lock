@@ -1,0 +1,16 @@
+PODS:
+  - SwiftlyIndicator (1.1.2)
+
+DEPENDENCIES:
+  - SwiftlyIndicator
+
+SPEC REPOS:
+  trunk:
+    - SwiftlyIndicator
+
+SPEC CHECKSUMS:
+  SwiftlyIndicator: 246e294f585cee05bbdd9adc90dd01d2d0b2628b
+
+PODFILE CHECKSUM: 4fe5f314f8eccbaddca1e535f874bfcdd05bf680
+
+COCOAPODS: 1.8.4

@@ -1,6 +1,0 @@
-framework module SwiftlyIndicator {
-  umbrella header "SwiftlyIndicator-umbrella.h"
-
-  export *
-  module * { export * }
-}
